@@ -1,0 +1,109 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Colaboradores || Edição de Dados</title>
+    <style>
+      body {
+        font-family: Arial;
+        margin: 40px;
+      }
+
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: 20px;
+      }
+
+      th,
+      td {
+        border: 1px solid #ccc;
+        padding: 8px;
+      }
+
+      th {
+        background: #f4f4f4;
+      }
+
+      form input {
+        margin-right: 5px;
+      }
+    </style>
+    <link
+      rel="shortcut icon"
+      href="{{ url_for('static', filename='dpd_favicon.ico') }}"
+    />
+  </head>
+
+  <body>
+    <h2>
+      {{ "Editar Colaborador" if edit_mode else "Adicionar Colaborador" }}
+    </h2>
+
+    <form method="post">
+      <input
+        name="name"
+        placeholder="Name"
+        required
+        value="{{ employee.name if edit_mode else '' }}"
+      />
+      <input
+        name="job"
+        placeholder="Job"
+        value="{{ employee.job if edit_mode else '' }}"
+      />
+      <input
+        name="dept"
+        placeholder="Dept"
+        value="{{ employee.dept if edit_mode else '' }}"
+      />
+      <input
+        name="email"
+        placeholder="Email"
+        value="{{ employee.email if edit_mode else '' }}"
+      />
+      <input
+        name="mobile"
+        placeholder="Mobile"
+        value="{{ employee.mobile if edit_mode else '' }}"
+      />
+      <input
+        name="phone"
+        placeholder="Phone"
+        value="{{ employee.phone if edit_mode else '' }}"
+      />
+      <button type="submit">{{ "Update" if edit_mode else "Add" }}</button>
+    </form>
+
+    <h2>Colaboradores</h2>
+
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Job</th>
+        <th>Dept</th>
+        <th>Email</th>
+        <th>Mobile</th>
+        <th>Phone</th>
+        <th>Actions</th>
+      </tr>
+      {% for e in employees %}
+      <tr>
+        <td>{{ e.name }}</td>
+        <td>{{ e.job }}</td>
+        <td>{{ e.dept }}</td>
+        <td>{{ e.email }}</td>
+        <td>{{ e.mobile }}</td>
+        <td>{{ e.phone }}</td>
+        <td>
+          <a href="/edit/{{ e.id }}">Edit</a> |
+          <a
+            href="/delete/{{ e.id }}"
+            onclick="return confirm('Delete this record?');"
+            >Delete</a
+          >
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+  </body>
+</html>

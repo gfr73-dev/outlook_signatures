@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="pt">
+  <head>
+    <meta charset="UTF-8" />
+    <title>DPD || Gerar Assinaturas</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+        max-width: 600px;
+      }
+
+      h1 {
+        margin-bottom: 10px;
+      }
+
+      label {
+        display: block;
+        margin-top: 15px;
+        font-weight: bold;
+      }
+
+      select,
+      input[type="text"] {
+        width: 320px;
+        padding: 6px;
+        margin-top: 5px;
+      }
+
+      .buttons {
+        margin-top: 20px;
+      }
+
+      button {
+        padding: 10px 16px;
+        font-size: 15px;
+        margin-right: 10px;
+        cursor: pointer;
+      }
+
+      .note {
+        margin-top: 20px;
+        font-size: 12px;
+        color: #555;
+      }
+    </style>
+    <link
+      rel="shortcut icon"
+      href="{{ url_for('static', filename='dpd_favicon.ico') }}"
+    />
+  </head>
+
+  <body>
+    <div class="card-header d-flex align-items-center gap-4"><img src="./static/logos/dpd_logo_50.png" alt="Logo" style="height: 48px; width: auto;"></div>
+    <h1>DPD Portugal</h1>
+    <h3>Gerar assinatura Outlook</h3>
+
+    <!-- SEARCH FORM -->
+    <form method="GET" action="{{ url_for('index') }}">
+      <label for="search">Procurar Colaborador</label>
+      <input
+        type="text"
+        id="search"
+        name="q"
+        placeholder="Escrever parte do nome ou apelido…"
+        value="{{ q }}"
+      />
+      <button type="submit">Pesquisar</button>
+    </form>
+
+    <hr style="margin: 25px 0" />
+
+    <hr style="margin: 25px 0" />
+
+    <!-- EMPLOYEE + GENERATION FORM -->
+    <form method="POST" action="{{ url_for('generate') }}">
+      <label for="employee">Colaborador</label>
+      <select name="employee_id" id="employee" required>
+        <option value="">-- seleccionar --</option>
+
+        {% for emp in employees %}
+        <option value="{{ emp.id }}">
+          {{ emp.name }}{% if emp.job %} — {{ emp.job }}{% endif %}
+        </option>
+        {% endfor %}
+      </select>
+
+      <div class="buttons">
+        <button
+          type="submit"
+          formaction="{{ url_for('generate', format='html') }}"
+          formmethod="post"
+        >
+          Gerar Assinatura
+        </button>
+      </div>
+    </form>
+  </body>
+</html>
