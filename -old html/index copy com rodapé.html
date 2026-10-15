@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>DPD || Gerar Assinaturas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        select,
+        input[type=text] {
+            width: 312px;
+            padding: 5px;
+            margin-top: 5px;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>DPD Portugal - Gerar assinatura Outlook PNG</h1>
+
+    <!-- Search form -->
+    <form method="GET" action="/">
+        <label for="search">Procurar Colaborador:</label>
+        <input type="text" id="search" name="q" placeholder="Escrever nome ou função..." value="{{ q }}">
+        <button type="submit">Pesquisar</button>
+    </form>
+
+    <!-- Employee selection -->
+    <form method="POST">
+        <label>
+            Colaborador:
+            <select name="employee_id" required>
+                <option value="">-- seleccionar --</option>
+                {% for emp in employees %}
+                <option value="{{ emp.id }}">
+                    {{ emp.name }}{% if emp.job %} — {{ emp.job }}{% endif %}
+                </option>
+                {% endfor %}
+            </select>
+        </label>
+        <button type="submit">Gerar assinatura</button>
+    </form>
+</body>
+
+</html>
